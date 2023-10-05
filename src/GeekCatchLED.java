@@ -5,9 +5,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Scanner;
 
 public class GeekCatchLED implements SerialPortDataListener {
     private SerialPort serialPort;
+    public static String name;
+    public static String message;
+    public static double amount;
+    public static String animation;
+    public static String color;
+    public static String font;
     private enum Animations
     {
         RANDOM_CYCLE("A"), STATIC("B"), OPEN_FROM_RIGHT("C"), OPEN_FROM_LEFT("D"),
@@ -48,11 +55,13 @@ public class GeekCatchLED implements SerialPortDataListener {
 
         private String code;
         public String getCode() {
+
             return this.code;
         }
 
         Font(String code) {
             this.code = code;
+
         }
     }
 
@@ -152,8 +161,36 @@ public class GeekCatchLED implements SerialPortDataListener {
                 .map(SerialPort::getSystemPortName)
                 .collect(Collectors.toList());
     }
+    public static void RecordTypes(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the chatter's name: ");
+        name = scanner.nextLine();
+
+        System.out.print("Enter the donation amount: ");
+        amount = scanner.nextDouble();
+
+        scanner.nextLine(); // Consume newline
+
+        System.out.print("Enter the donation message: ");
+        message = scanner.nextLine();
+    }
+    public static void BellsAndWhistles(){
+        if (amount >= 100){
+
+        }
+        if (amount >= 50){
+
+        }
+        if (amount >= 10){
+
+        }
+        if (amount >= 1){
+
+        }
+    }
 
     public static void main(String[] args) {
+        RecordTypes();
         GeekCatchLED gcl = null;
         try {
             gcl = new GeekCatchLED("tty.usbserial-1440", 9600);
@@ -169,7 +206,7 @@ public class GeekCatchLED implements SerialPortDataListener {
                                 Delay.MEDIUM.getCode()+
                                 Color.RED.getCode()+
                                 Font.SHORT_WIDE.getCode()+
-                                "Welcome CIS18\r\r\r");
+                                name + "Just donated: " + amount + "To say " + message);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
