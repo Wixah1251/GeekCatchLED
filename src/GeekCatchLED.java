@@ -11,10 +11,11 @@ public class GeekCatchLED implements SerialPortDataListener {
     private SerialPort serialPort;
     public static String name;
     public static String message;
-    public static double amount;
+    public static int amount;
     public static String animation;
     public static String color;
     public static String font;
+    public static String delay;
     private enum Animations
     {
         RANDOM_CYCLE("A"), STATIC("B"), OPEN_FROM_RIGHT("C"), OPEN_FROM_LEFT("D"),
@@ -161,36 +162,19 @@ public class GeekCatchLED implements SerialPortDataListener {
                 .map(SerialPort::getSystemPortName)
                 .collect(Collectors.toList());
     }
-    public static void RecordTypes(){
+    public static void StuffnThings(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the chatter's name: ");
         name = scanner.nextLine();
-
         System.out.print("Enter the donation amount: ");
-        amount = scanner.nextDouble();
-
-        scanner.nextLine(); // Consume newline
-
-        System.out.print("Enter the donation message: ");
-        message = scanner.nextLine();
+            amount = scanner.nextInt();
+            System.out.print("Enter the donation message: ");
+            message = scanner.nextLine();
+            scanner.nextLine();
     }
-    public static void BellsAndWhistles(){
-        if (amount >= 100){
-
-        }
-        if (amount >= 50){
-
-        }
-        if (amount >= 10){
-
-        }
-        if (amount >= 1){
-
-        }
-    }
-
     public static void main(String[] args) {
-        RecordTypes();
+        StuffnThings();
+
         GeekCatchLED gcl = null;
         try {
             gcl = new GeekCatchLED("tty.usbserial-1440", 9600);
@@ -198,15 +182,46 @@ public class GeekCatchLED implements SerialPortDataListener {
                 System.out.println(p);
             }
             if(gcl.openPort()) {
-                System.out.println(Animations.EXPLODE.getCode());
-                gcl.sendStringToComm(
-                        "~128~f02"+
-                                Animations.SLIDE_IN.getCode()+
-                                Speed.SLOW.getCode()+
-                                Delay.MEDIUM.getCode()+
-                                Color.RED.getCode()+
-                                Font.SHORT_WIDE.getCode()+
-                                name + "Just donated: " + amount + "To say " + message);
+                if (amount >= 100){
+                    gcl.sendStringToComm(
+                            "~128~f02"+
+                                    Animations.EXPLODE.getCode()+
+                                    Speed.SLOW.getCode()+
+                                    Delay.SLOW.getCode()+
+                                    Color.BRIGHT_LAYER_MIX.getCode()+
+                                    Font.SEVEN_BY_NINE.getCode()+
+                                    name + "Just donated: " + amount + "To say " + message);
+                }
+                if (amount >= 50 && amount <= 75){
+                    gcl.sendStringToComm(
+                            "~128~f02"+
+                                    Animations.OPEN_FROM_LEFT.getCode()+
+                                    Speed.SLOW.getCode()+
+                                    Delay.SLOW.getCode()+
+                                    Color.BRIGHT_RED.getCode()+
+                                    Font.WIDE.getCode()+
+                                    name + "Just donated: " + amount + "To say " + message);
+                }
+                if (amount >= 10 && amount <= 49){
+                    gcl.sendStringToComm(
+                            "~128~f02"+
+                                    Animations.OPEN_FROM_RIGHT.getCode()+
+                                    Speed.SLOW.getCode()+
+                                    Delay.MEDIUM.getCode()+
+                                    Color.BRIGHT_YELLOW.getCode()+
+                                    Font.DEFAULT.getCode()+
+                                    name + "Just donated: " + amount + "To say " + message);
+                }
+                if (amount >= 1 && amount <= 9){
+                    gcl.sendStringToComm(
+                            "~128~f02"+
+                                    Animations.SCROLL_UP.getCode()+
+                                    Speed.SLOW.getCode()+
+                                    Delay.MEDIUM.getCode()+
+                                    Color.GREEN.getCode()+
+                                    Font.SHORT.getCode()+
+                                    name + "Just donated: " + amount + "To say " + message);
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
