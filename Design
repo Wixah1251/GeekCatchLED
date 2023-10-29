@@ -7,3 +7,8 @@ class GeekCatchLED{
 class LEDBar{
     LEDBar()
 }
+
+classDiagram
+class GeekCatchLED{
+    Optimization and attempted integration of the command design pattern to make it run better
+}
