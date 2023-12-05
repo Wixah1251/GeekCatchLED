@@ -1,0 +1,14 @@
+classDiagram
+GeekCatchLED <|.. LEDBar : implements
+class GeekCatchLED{
+    Integrate all features from scrapped class in order to
+    create something that will work with the Raspberry pi
+}
+class LEDBar{
+    LEDBar()
+}
+
+classDiagram
+class GeekCatchLED{
+    Optimization and attempted integration of the command design pattern to make it run better
+}
