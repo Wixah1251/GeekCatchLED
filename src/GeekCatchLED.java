@@ -16,7 +16,7 @@ public class GeekCatchLED implements SerialPortDataListener {
     public static String color;
     public static String font;
     public static String delay;
-    private enum Animations
+    public static enum Animations
     {
         RANDOM_CYCLE("A"), STATIC("B"), OPEN_FROM_RIGHT("C"), OPEN_FROM_LEFT("D"),
         OPEN_FROM_CENTER("E"), OPEN_TO_CENTER("F"), COVER_FROM_CENTER("G"),
@@ -34,7 +34,7 @@ public class GeekCatchLED implements SerialPortDataListener {
         }
     }
 
-    private enum Color {
+    public static enum Color {
         RED("\\a"), BRIGHT_RED("\\b"), ORANGE("\\c"), BRIGHT_ORANGE("\\d"), YELLOW("\\e"),
         BRIGHT_YELLOW("\\f"), GREEN("\\g"), BRIGHT_GREEN("\\h"), RAINBOW("\\i"),
         BRIGHT_LAYER_MIX("\\j"), VERTICAL_MIX("\\k"), SAW_TOOTH_MIX("\\l"), GREEN_ON_RED("\\m"),
@@ -50,7 +50,7 @@ public class GeekCatchLED implements SerialPortDataListener {
         }
     }
 
-    private enum Font {
+    public static enum Font {
         SHORT("\\q"), SHORT_WIDE("\\r"), DEFAULT("\\s"), WIDE("\\t"),
         SEVEN_BY_NINE("\\u"), XTRA_WIDE("\\v"), SMALL("\\w");
 
@@ -66,7 +66,7 @@ public class GeekCatchLED implements SerialPortDataListener {
         }
     }
 
-    private enum Speed {
+    public static enum Speed {
         SUPER_FAST("\\Y1"), XTRA_FAST("\\Y2"), FAST("\\Y3"), MEDIUM("\\Y4"),
         SLOW("\\Y5"), XTRA_SLOW("\\Y6"), SUPER_SLOW("\\Y7"), TOO_SLOW("\\Y8");
 
@@ -80,7 +80,7 @@ public class GeekCatchLED implements SerialPortDataListener {
         }
     }
 
-    private enum Delay {
+    public static enum Delay {
         SUPER_FAST("\\Z1"), XTRA_FAST("\\Z2"), FAST("\\Z3"), MEDIUM("\\Z4"),
         SLOW("\\Z5"), XTRA_SLOW("\\Z6"), SUPER_SLOW("\\Z7"), SNAIL("\\Z8");
 
@@ -183,49 +183,25 @@ public class GeekCatchLED implements SerialPortDataListener {
             }
             if(gcl.openPort()) {
                 if (amount >= 100){
-                    gcl.sendStringToComm(
-                            "~128~f02"+
-                                    Animations.EXPLODE.getCode()+
-                                    Speed.SLOW.getCode()+
-                                    Delay.SLOW.getCode()+
-                                    Color.BRIGHT_LAYER_MIX.getCode()+
-                                    Font.SEVEN_BY_NINE.getCode()+
-                                    name + "Just donated: " + amount + "To say " + message);
+                    SourceClass Highest = new UpperClass(gcl);
+                    Highest.DesignTemplate();
                 }
                 if (amount >= 50 && amount <= 75){
-                    gcl.sendStringToComm(
-                            "~128~f02"+
-                                    Animations.OPEN_FROM_LEFT.getCode()+
-                                    Speed.SLOW.getCode()+
-                                    Delay.SLOW.getCode()+
-                                    Color.BRIGHT_RED.getCode()+
-                                    Font.WIDE.getCode()+
-                                    name + "Just donated: " + amount + "To say " + message);
-                }
-                if (amount >= 10 && amount <= 49){
-                    gcl.sendStringToComm(
-                            "~128~f02"+
-                                    Animations.OPEN_FROM_RIGHT.getCode()+
-                                    Speed.SLOW.getCode()+
-                                    Delay.MEDIUM.getCode()+
-                                    Color.BRIGHT_YELLOW.getCode()+
-                                    Font.DEFAULT.getCode()+
-                                    name + "Just donated: " + amount + "To say " + message);
+                    SourceClass HighestMiddle = new UpperMiddleClass(gcl);
+                    HighestMiddle.DesignTemplate();
+                } if (amount >= 10 && amount <= 49){
+                    SourceClass LowerMiddle = new MiddleLowerClass(gcl);
+                    LowerMiddle.DesignTemplate();
                 }
                 if (amount >= 1 && amount <= 9){
-                    gcl.sendStringToComm(
-                            "~128~f02"+
-                                    Animations.SCROLL_UP.getCode()+
-                                    Speed.SLOW.getCode()+
-                                    Delay.MEDIUM.getCode()+
-                                    Color.GREEN.getCode()+
-                                    Font.SHORT.getCode()+
-                                    name + "Just donated: " + amount + "To say " + message);
+                    SourceClass Lowest = new LowerClass(gcl);
+                    Lowest.DesignTemplate();
                 }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
+        }
+        finally {
             assert gcl != null;
             gcl.closePort();
         }
